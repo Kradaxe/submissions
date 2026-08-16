@@ -1,0 +1,36 @@
+class Solution {
+public:
+
+    bool func(string &s, int idx, unordered_map<string, bool> &mp, int n, string t, unordered_map<int, unordered_map<string, int>> &dp) {
+
+        if (idx == n) {
+            return mp[t];  
+        }
+
+        if(dp[idx].count(t)) return dp[idx][t];
+
+        bool option1 = func(s, idx + 1, mp, n, t + s[idx], dp);
+
+        bool option2 = false;
+        string temp = t + s[idx];
+        if (mp[temp]) {
+            option2 = func(s, idx + 1, mp, n, "", dp); 
+        }
+
+        dp[idx][t] = option1 || option2;
+        return dp[idx][t];
+    }
+
+    bool wordBreak(string s, vector<string>& wordDict) {
+
+        unordered_map<string, bool> mp;
+        unordered_map<int, unordered_map<string, int>> dp;
+        
+        int n = s.size();
+        for (auto it : wordDict) {
+            mp[it] = true;
+        }
+
+        return func(s, 0, mp, n, "", dp);
+    }
+};

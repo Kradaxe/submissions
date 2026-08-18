@@ -1,0 +1,32 @@
+class Solution {
+public:
+
+    void func(vector<int>& cand, int tar, vector<vector<int>> &ans, vector<int> temp, int idx){
+
+        if(tar == 0) ans.push_back(temp);
+
+        int n = cand.size();
+
+        for(int i = idx; i < n; i++){
+
+            if(i > 0 && cand[i] == cand[i-1]) continue;
+
+            temp.push_back(cand[i]);
+            if(tar >= cand[i]) func(cand, tar - cand[i], ans, temp, i);
+            temp.pop_back();
+
+        }
+
+    }
+
+    vector<vector<int>> combinationSum(vector<int>& cand, int tar) {
+
+        vector<vector<int>> ans;
+        vector<int> temp;
+
+        func(cand, tar, ans, temp, 0);
+
+        return ans;
+        
+    }
+};

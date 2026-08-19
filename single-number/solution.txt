@@ -2,7 +2,7 @@ class Solution {
 public:
     int singleNumber(vector<int>& nums) {
 
-        int ans = 0;
+        int ans = 1;
 
         for(auto i : nums){
 
@@ -10,6 +10,7 @@ public:
 
         }
 
+        ans ^= 1;
         return ans;
         
     }

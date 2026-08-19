@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool func(int node, vector<vector<int>>& adj, int n, vector<int>& vis, vector<int>& pathVis) {
+        if(vis[node] == 1 && pathVis[node] == 1) return true;
+        if(vis[node] == 1) return false;
+
+        vis[node] = 1;
+        pathVis[node] = 1;
+
+        for(auto it : adj[node]){
+            if(func(it, adj, n, vis, pathVis)) return true;
+        }
+
+        pathVis[node] = 0;
+        return false;
+    }
+
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adj(numCourses);
+        for (auto it : prerequisites){
+            adj[it[0]].push_back(it[1]); // course A depends on course B => A -> B
+        }
+
+        int n = numCourses;
+        vector<int> vis(n, 0);
+        vector<int> pathVis(n, 0);
+
+        for(int i = 0; i < n; i++){
+            if(!vis[i]){
+                if(func(i, adj, n, vis, pathVis)) return false; // cycle detected
+            }
+        }
+
+        return true; // no cycle found
+    }
+};

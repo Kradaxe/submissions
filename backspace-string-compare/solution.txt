@@ -1,0 +1,34 @@
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+
+        string sn = "", tn = "";
+
+        reverse(s.begin(), s.end());
+        reverse(t.begin(), t.end());
+
+        int ct = 0;
+
+        for(auto i : s){
+
+            if(i == '#') ct++;
+            else if(ct == 0) sn += i;
+            else ct--;
+
+        }
+
+        ct = 0;
+
+        for(auto i : t){
+
+            if(i == '#') ct++;
+            else if(ct == 0) tn += i;
+            else ct--;
+
+        }
+
+        if(sn == tn) return true;
+        return false;
+        
+    }
+};

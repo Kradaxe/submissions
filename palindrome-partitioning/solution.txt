@@ -1,0 +1,51 @@
+class Solution {
+public:
+
+    bool isPalin(string s){
+
+        for(int i = 0; i < s.size()/2; i++){
+
+            if(s[i] != s[s.size()-1-i]) return false;
+
+        }
+
+        return true;
+
+    }
+
+    void calc(vector<vector<string>> &ans, int i, int j , string s, vector<string> &temp){
+
+        if(i == s.size() && j == i) {
+
+            ans.push_back(temp);
+            return;
+
+        }
+
+        if(j >= s.size()) return;
+
+        string t = s.substr(i,j-i+1);
+
+
+        if(isPalin(t)) {
+
+            temp.push_back(t);
+
+            calc(ans, j+1, j+1, s, temp);
+
+            temp.pop_back();
+        }
+
+        calc(ans, i, j+1, s, temp);
+
+    }
+
+    vector<vector<string>> partition(string s) {
+
+        vector<vector<string>> ans;
+        vector<string> temp;
+        calc(ans, 0, 0 , s , temp);
+        return ans;
+        
+    }
+};

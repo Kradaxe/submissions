@@ -1,0 +1,48 @@
+class Solution {
+
+    unordered_map<char, string> mp = {
+        {'2', "abc"},
+        {'3', "def"},
+        {'4', "ghi"},
+        {'5', "jkl"},
+        {'6', "mno"},
+        {'7', "pqrs"},
+        {'8', "tuv"},
+        {'9', "wxyz"}
+    };
+
+
+public:
+
+    void calc(string d, int i, vector<string> &ans, string t){
+
+        if(t.size() == d.size()){
+
+            ans.push_back(t);
+            return;
+            
+        }
+
+        string vals = mp[d[i]];
+
+        for(auto it : vals){
+
+            t += it;
+            calc(d, i+1, ans, t);
+            t.pop_back();
+            calc(d, i+1, ans, t);
+
+        }
+
+    }
+
+    vector<string> letterCombinations(string digits) {
+
+        if(digits.size() == 0) return {};
+
+        vector<string> ans;
+        calc(digits, 0, ans, "");
+        return ans;
+        
+    }
+};
